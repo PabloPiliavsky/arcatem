@@ -1,11 +1,11 @@
 # HISTORIAL DE CAMBIOS Y DECISIONES TÉCNICAS (HISTORY.md)
 
-## [2026-07-10 10:30] Creación e Integración de Cotizador de Persianas Premium
+## [2026-10-05 18:40] Alineación del Ecosistema Multi-Agente y Skills Especializadas ARCA/AFIP
 
-### Decisiones de Arquitectura
-- **React 19 + Vite 8 + Tailwind CSS v4 + shadcn/ui**: Se inicializó una SPA frontend limpia y optimizada.
-- **Importación de Datos Maestros desde Catálogo Real**: Se procesó el archivo de precios reales de Metalconf (`Precios COR Metalconf 19.04.2024.pdf`), implementando códigos (`COR050`, `COR030`, `COR026`, etc.) y precios en USD de fábrica.
-- **Modelado de Guías y Vuelos Dinámicos**: Los modelos de guías y cajones de persiana (vuelo) se parametrizaron dentro del CRUD con sus propios anchos de perfil e incrementos de altura para permitir que las fórmulas de cotización sean completamente configurables y adaptables.
-- **Desglose de Costos e Impresión en PDF**: Se implementó la generación de PDFs mediante `jsPDF` con un diseño corporativo limpio de color pizarra para el envío formal de cotizaciones a clientes.
-- **Visualizador SVG Interactivo**: Creación de un sistema de previsualización 2D que renderiza dinámicamente el cajón, guías y persiana con control deslizante de porcentaje de apertura (0-100%).
-- **Persistencia en LocalStorage**: Toda la base de datos maestra (CRUD) y el historial de cotizaciones se guardan de forma persistente en el navegador del usuario.
+### Decisiones de Arquitectura y Gobernanza SDD
+- **Constitución Fundacional (`docs/constitution.md`)**: Se redactó la Constitución del Proyecto para el Sistema de Facturación Electrónica POS/ERP con integración nativa a ARCA (ex-AFIP) usando React 19, Vite 8, Tailwind CSS v4, shadcn/ui, Node.js, Express y MySQL 8+.
+- **Activación y Enriquecimiento de `AFIP_WebServices_Expert_Skill`**: Se añadió el frontmatter YAML estándar (`name: afip-arca-webservices`) y las estructuras SOAP exactas de `WSAA` (`loginCms`) y `WSFEv1` (`FEDummy`, `FECompUltimoAutorizado`, `FECAESolicitar`, `FECompConsultar`), vinculando los manuales oficiales PDF y archivos WSDL locales.
+- **Nuevas Skills Técnicas Generadas**:
+  - `backend-node-express-mysql`: Patrones de controladores atómicos, transacciones ACID con `SELECT ... FOR UPDATE` en MySQL para correlatividad de comprobantes y máquina de estados fiscal.
+  - `pos-fiscal-qr-print`: Firma criptográfica CMS (PKCS#7) con OpenSSL, validación de CUIT (Módulo 11), especificación oficial del Código QR de ARCA (RG 4892) y requisitos de impresión gráfica (A4 y ticket 80mm).
+- **Alineación Integral de `.agent/`**: Se actualizaron `AGENT.md`, `backend_SOUL.md`, `frontend_SOUL.md`, `01_PLANNER.md`, `02_SYNTHESIZER.md` y `MEMORY.md` para que todos los agentes operen como expertos en los Web Services de ARCA/AFIP.
