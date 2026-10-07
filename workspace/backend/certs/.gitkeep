@@ -1,0 +1,6 @@
+# Coloca en esta carpeta tus certificados digitales y claves privadas de ARCA:
+# - privada_homo.key
+# - certificado_homo.pem
+# - privada_prod.key
+# - certificado_prod.pem
+# Todos los archivos de esta carpeta (excepto este .gitkeep) están ignorados en .gitignore.

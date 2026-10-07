@@ -1,0 +1,63 @@
+# =============================================================================
+# 1. DEPENDENCIAS Y BUNDLES DE COMPILACIÓN
+# =============================================================================
+node_modules/
+dist/
+build/
+.vite/
+coverage/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =============================================================================
+# 2. VARIABLES DE ENTORNO (SECRETOS)
+# =============================================================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.homologacion
+.env.produccion
+!.env.example
+
+# =============================================================================
+# 3. CRIPTOGRAFÍA Y CERTIFICADOS AFIP / ARCA (PROHIBIDO SUBIR A GIT)
+# =============================================================================
+# Carpetas de certificados y tickets temporales
+certs/*
+!certs/.gitkeep
+workspace/backend/certs/*
+!workspace/backend/certs/.gitkeep
+ta_cache/
+workspace/backend/ta_cache/
+
+# Extensiones de claves privadas, certificados X.509 y pedidos CSR
+*.key
+*.pem
+*.crt
+*.csr
+*.pfx
+*.p12
+*.der
+
+# Archivos XML de Tickets de Requerimiento (TRA) y Tickets de Acceso (TA)
+*TRA*.xml
+*TA*.xml
+LoginTicketRequest*.xml
+LoginTicketResponse*.xml
+*.cms
+
+# =============================================================================
+# 4. SISTEMA OPERATIVO Y EDITORES
+# =============================================================================
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo

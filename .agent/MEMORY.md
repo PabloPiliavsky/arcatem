@@ -6,7 +6,7 @@ Este archivo contiene el contexto a largo plazo, decisiones de arquitectura y ap
 - **Dominio**: Sistema de Facturación Electrónica POS Local / ERP con integración SOAP nativa a los Web Services de ARCA (`WSAA` y `WSFEv1` - RG 4291, RG 5616 y RG 4892) sin librerías aranceladas.
 - **Stack Full-Stack**:
   - **Frontend (`workspace/frontend/`)**: React 19 (`.js`/`.jsx`), Vite 8, Tailwind CSS v4, shadcn/ui, `lucide-react`.
-  - **Backend (`workspace/backend/`)**: Node.js (ES Modules), Express, MySQL 8+ (InnoDB transaccional ACID vía `mysql2/promise`), criptografía nativa (`node:crypto` / `openssl cms`), XML SOAP (`fast-xml-parser`) y QR (`qrcode`).
+  - **Backend (`workspace/backend/`)**: Node.js (ES Modules), Express, **Sequelize ORM** (`sequelize` + `mysql2` sobre MySQL 8+ InnoDB transaccional ACID), firma criptográfica mediante **`openssl cms -sign`** (estándar oficial recomendado por ARCA), XML SOAP (`fast-xml-parser`), QR (`qrcode`) y generación de comprobantes con **prioridad en PDF (A4)** más soporte térmico 80mm.
 - **Preferencia del Usuario**: Respuestas concisas, desarrollo incremental guiado por especificaciones (SDD), código auto-documentado sin comentarios redundantes y sin punto y coma (`;`).
 
 ## DECISIONES ARQUITECTÓNICAS

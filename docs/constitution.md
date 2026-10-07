@@ -33,22 +33,22 @@ En un sistema conectado a ARCA, **nunca puede invocarse a AFIP directamente desd
   - **Estilos y UI**: Tailwind CSS v4 (`@import "tailwindcss";`) + **shadcn/ui** (Radix UI + `cn` helper) + `lucide-react`.
 - **Backend (`workspace/backend/`)**:
   - **Core**: Node.js (ES Modules `import`/`export`), Express.
-  - **Criptografía y SOAP Nativo**: Módulo nativo `node:crypto` / ejecución controlada de `openssl cms` (o `node-forge` open-source) para firma CMS (PKCS#7), `fetch`/`axios` para transporte HTTPS SOAP y parser XML open-source (`fast-xml-parser`).
-  - **Generación Gráfica y QR**: Generación del payload JSON Base64 oficial de ARCA renderizado como QR open-source (`qrcode`) y generación de comprobantes imprimibles.
-- **Base de Datos Relacional**:
-  - **Motor**: **MySQL 8+** con soporte transaccional InnoDB (`mysql2/promise` o ORM ligero configurado en `workspace/backend/src/config/`).
-  - **Responsabilidad**: Almacenar ventas, ítems, alícuotas de IVA, clientes, productos, auditoría de peticiones SOAP, caché persistente de Tickets de Acceso (`wsaa_tickets`) y registro inmutable de CAEs otorgados.
+  - **Criptografía y SOAP Nativo**: Ejecución de `openssl cms -sign` (método oficial recomendado por ARCA) para la firma CMS (PKCS#7) del `TRA.xml`, `fetch`/`axios` para transporte HTTPS SOAP y parser XML open-source (`fast-xml-parser`).
+  - **Generación Gráfica y QR**: Generación del payload JSON Base64 oficial de ARCA renderizado como QR open-source (`qrcode`) y generación de comprobantes en **PDF (Hoja A4 como prioridad principal)** y soporte para **Ticket Térmico 80mm**.
+- **Base de Datos Relacional y ORM**:
+  - **Motor y ORM**: **MySQL 8+** con soporte transaccional InnoDB gestionado mediante **Sequelize ORM** (`sequelize` + `mysql2`).
+  - **Responsabilidad**: Almacenar ventas, ítems, alícuotas de IVA (`DECIMAL(15, 2)`), clientes, productos, secuencias con bloqueo transaccional (`LOCK.UPDATE`), caché persistente de Tickets de Acceso (`ArcaToken`) y registro inmutable de CAEs otorgados.
 
 ### 3. Principios de Arquitectura y Estructura de Directorios (Leyes SDD)
 
 #### I. Modularización y Separación de Responsabilidades (SRP)
 - **Frontend (`workspace/frontend/src/`)**: Organización estricta por dominio funcional (`features/[feature]/components`, `services`, `hooks`), código transversal en `shared/ui`, `shared/providers`, `shared/utils`, y rutas globales en `app/`.
 - **Backend (`workspace/backend/src/`)**: Arquitectura en capas estricta:
-  - `config/`: Conexión a MySQL, variables de entorno y rutas de certificados ARCA.
+  - `config/`: Instancia y conexión de **Sequelize** a MySQL, variables de entorno y rutas de certificados ARCA.
   - `controllers/`: Controladores **atómicos** (un archivo por acción, ej. `emitInvoice.js`, `getLastVoucher.js`) exportados con `export default function`. Solo manejan `req`/`res` y códigos HTTP.
   - `services/`: Lógica de negocio pura e integración modular con ARCA (`wsaaService.js`, `wsfeService.js`, `qrGeneratorService.js`).
-  - `repositories/`: Interacción exclusiva con MySQL mediante consultas parametrizadas y transacciones.
-  - `models/`: Esquemas de tablas y entidades de dominio.
+  - `repositories/`: Interacción exclusiva con los modelos de **Sequelize** y manejo de transacciones ACID (`sequelize.transaction`).
+  - `models/`: Definición de modelos y relaciones de **Sequelize**.
   - `routes/` y `middleware/`: Enrutamiento Express, validación de esquemas y manejo centralizado de errores.
 
 #### II. Estándar de UI/UX

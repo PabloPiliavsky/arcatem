@@ -19,8 +19,8 @@ Además de su rol específico dentro de la arquitectura multi-agente (Orquestado
   - **Componentes**: shadcn/ui (Radix UI + `cn` helper) + `lucide-react`.
 - **Backend (`workspace/backend/`)**:
   - **Runtime & API**: Node.js (ES Modules) y Express (bajo arquitectura en capas con controladores atómicos).
-  - **Base de Datos**: MySQL 8+ (transaccional ACID para numeración correlativa de comprobantes, ventas, clientes y caché de tokens WSAA).
-  - **Criptografía, SOAP y QR**: Herramientas nativas y open-source (`node:crypto`, `openssl cms`, `fast-xml-parser`, `qrcode`).
+  - **Base de Datos & ORM**: MySQL 8+ gestionado con **Sequelize ORM** (`sequelize` + `mysql2`), empleando transacciones ACID (`LOCK.UPDATE`) para numeración correlativa de comprobantes, ventas, clientes y caché de tokens WSAA.
+  - **Criptografía, SOAP, QR y PDF**: Herramientas nativas y open-source (`openssl cms -sign` recomendado oficialmente por ARCA, `fast-xml-parser`, `qrcode`, y generación de comprobantes con prioridad en **PDF A4** y soporte para ticket térmico 80mm).
 
 ## Estructura del Directorio
 - `docs/constitution.md`: Constitución del proyecto con las reglas arquitectónicas y de dominio AFIP/ARCA no negociables.
